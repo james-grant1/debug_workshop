@@ -28,6 +28,8 @@ module fix_me_utils
       integer       :: num_threads
       real(kind=DP) :: theta, st, ct
 
+      write(OUTPUT_UNIT,'(a)')    "[ Entering build_Rmat ]"
+
       num_threads = 1
 !$    num_threads = omp_get_max_threads()
 
@@ -43,12 +45,15 @@ module fix_me_utils
          Rmat(1:2,2,irot) = [ st, ct ]
       end do
 !$OMP END PARALLEL DO
+
+      write(OUTPUT_UNIT,'(a)')    "[ Leaving build_Rmat ]"
+
     end subroutine build_Rmat
 
     subroutine apply_Rmat(n_rotations,Rmat,vec_init,vec_result)
 
 !$    use :: omp_lib, only: omp_get_max_threads
-      
+
       implicit none
 
       ! Arguments
@@ -60,40 +65,32 @@ module fix_me_utils
       ! Local variables
       integer       :: irot
       integer       :: num_threads
-      integer       :: n_calls = 0 ! implicit SAVE attribute
-      logical       :: test_var = .false.
+      integer, save :: n_calls = 0
+      logical       :: test_var = .false. ! implicit SAVE attribute
 
-      write(*,*) "test_var == ", test_var
+      write(OUTPUT_UNIT,'(a)')    "[ Entering apply_Rmat ]"
+
+      write(OUTPUT_UNIT,'(a,l1)') "Value of test_var: ", test_var
 
       num_threads = 1
 !$    num_threads = omp_get_max_threads()
 
 !$OMP PARALLEL DO NUM_THREADS(num_threads) DEFAULT(NONE) &
 !$OMP PRIVATE(irot) &
-!$OMP SHARED(Rmat,vec_result,vec_init,n_calls,test_var,n_rotations)
+!$OMP SHARED(num_threads,Rmat,vec_result,vec_init,n_calls,test_var,n_rotations)
       do irot = 1, n_rotations
-         if (irot == n_rotations/2) test_var = .true.
+         if (mod(num_threads,irot) == 0) then
+            test_var = .true.
+         end if
          vec_result(:,irot) = matmul( Rmat(:,:,irot), vec_init(:) )
       end do
 !$OMP END PARALLEL DO
 
-
       n_calls = n_calls + 1
 
-      ! We expect compilation with OpenMP with Intel Fortran to cause this
-      ! implicit SAVEd variable to not be SAVEd, because -qopenmp implies
-      ! -automatic, which causes "all local, non-SAVEd variables to be allocated 
-      ! to the run-time stack". 
-      !
-      ! This was originally identified as an issue in ONETEP, where we relied on
-      ! a implicit SAVE attribute of a logical variable to ensure that a warning
-      ! was only output a single time. When compiling with OpenMP, it seems that
-      ! the SAVE attribute was lost, so the warning was output multiple times.
-      !
-      ! This minimal example does not seem to demonstrate the effect. Possibly 
-      ! the example is too small for the run-time stack to be overwritten
-      ! between subroutine calls.
       write(OUTPUT_UNIT,'(a,i0,a)') "apply_Rmat called ", n_calls, " times."
+
+      write(OUTPUT_UNIT,'(a)')    "[ Leaving apply_Rmat ]"
 
     end subroutine apply_Rmat
 end module fix_me_utils
