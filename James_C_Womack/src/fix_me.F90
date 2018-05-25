@@ -7,13 +7,14 @@ program fix_me
 
   real(kind=DP), parameter :: PI = 4.0_DP * atan(1.0_DP)
   real(kind=DP), parameter :: angle_increment = 2*PI*1.0_DP/100
-  integer, parameter :: n_rotations = 142
+  integer, parameter :: n_rotations = 100000
 
   real(kind=DP) :: Rmat(2,2,n_rotations)
   real(kind=DP) :: vec_init(2)
   real(kind=DP) :: vec_result(2,n_rotations)
   real(kind=DP) :: theta
   integer       :: irot
+  integer       :: ii
   integer       :: num_threads
   logical       :: theta_exceeded_2pi = .false.
 
@@ -30,8 +31,5 @@ program fix_me
   vec_init = [ 0.0, 1.0 ]
 
   call apply_Rmat(n_rotations,Rmat,vec_init,vec_result)
-  !do irot = 1, n_rotations
-  !   write(OUTPUT_UNIT,*) angle_increment*irot
-  !   write(OUTPUT_UNIT,*) Rmat(:,:,irot)
-  !end do
+
 end program
