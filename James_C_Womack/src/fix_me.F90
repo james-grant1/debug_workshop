@@ -39,11 +39,6 @@ program fix_me
   real(kind=DP) :: Rmat(2,2,n_rotations)
   real(kind=DP) :: vec_init(2)
   real(kind=DP) :: vec_result(2,n_rotations)
-  real(kind=DP) :: theta
-  integer       :: irot
-  integer       :: ii
-  integer       :: num_threads
-  logical       :: theta_exceeded_2pi = .false.
 
   write(OUTPUT_UNIT,'(a)') "Example bug for Debugging Numerical Software workshop, Bath, 4-5 June 2018"
   write(OUTPUT_UNIT,'(a)') "James C. Womack, 25/05/18"
