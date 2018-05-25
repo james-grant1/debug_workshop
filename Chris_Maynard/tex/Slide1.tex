@@ -1,0 +1,22 @@
+\documentclass{beamer}
+
+\mode<presentation> {
+
+\begin{document}
+
+\begin{frame}
+\frametitle{GMRES solver fails to converge}
+
+\begin{itemize}
+\item Solver API code with CG, BiCGstab and GMRES from LFRic code
+\item Fortran 2003, OO code, test is for line vectors and 1-d Poisson eqn
+\item Runs the solvers on the same problem to test. GMRES fails, but only
+      for Cray and PGI compiler - Intel and Gnu work OK
+\item Other solvers work for all compilers.
+
+\end{itemize}
+
+\end{frame}
+
+}
+\end{document} 
