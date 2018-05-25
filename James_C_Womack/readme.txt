@@ -1,3 +1,3 @@
 James C. Womack
 
-Bug title: Unexpected behaviour Fortran OpenMP code
+Bug title: Unexpected behaviour of Fortran OpenMP code
