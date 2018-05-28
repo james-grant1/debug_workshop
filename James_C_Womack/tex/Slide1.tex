@@ -1,8 +1,27 @@
 \documentclass{beamer}
 \mode<presentation>
+\beamertemplatenavigationsymbolsempty 
 
 \begin{document}
 \begin{frame}
-\frametitle{Bug hunt}
+  \frametitle{Compiling Fortran with OpenMP:\\ Unexpected changes to storage of local variables}
+    \begin{description}
+      \item[Language] Fortran 2003/2008
+      \item[Code] ONETEP (\url{https://www.onetep.org})
+      \item[Submission] Incomplete minimal working example (MWE)
+    \end{description}
+    { \footnotesize
+    \begin{itemize}
+      \item One-time warning is output multiple times when compiled with OpenMP
+      % The warning is to tell users 
+      \item Warning should be suppressed after 1\textsuperscript{st} time by setting a static variable
+      \item Message \emph{is} suppressed when compiled without OpenMP
+      \item Static variable uses implicit SAVE attribute via explicit initialization
+      % Implicit SAVE attribute via explicit initialization is part of the Fortran standard
+      \item Only occurs with Intel Fortran, not GFortran
+      \item Adding explicit SAVE attribute solves the issue with OpenMP, \emph{but why?}
+      \item A MWE has so far proven elusive...
+    \end{itemize}
+    }
 \end{frame}
 \end{document}

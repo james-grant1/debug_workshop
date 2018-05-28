@@ -3,6 +3,7 @@
 TEX_FILES := $(wildcard *.tex)
 PDF_FILES := $(patsubst %.tex,%.pdf,${TEX_FILES})
 CLEAN_EXT := .aux .dvi .log .nav .out .pdf .ps .snm .toc
+READER    := evince
 
 all: ${PDF_FILES}
 
@@ -15,7 +16,7 @@ all: ${PDF_FILES}
 	ps2pdf $*.ps
 
 read:
-	./read.sh $(filename) &
+	evince ${PDF_FILES} &
 
 clean:
 	for FILE in ${TEX_FILES}; do \
