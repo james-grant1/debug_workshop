@@ -6,13 +6,16 @@
 \begin{frame}
   \frametitle{Bug solution}
   \begin{description}
-    \item[Status] Resolved, but unsure why! \\
-                  Is this a compiler bug, or a subtle bug in the code?
-    
+    \item[Current status] Resolved, but unsure why!
+    % - Using an explicit SAVE attribute solves the problem, but according to
+    %   the standard, this should not be necessary (I think).
+    %   - GFortran does not suffer from this issue at all, apparently.
     % - I think the difficulty in preparing a MWE is an interesting topic to 
     %   discuss.
     %   - It is unclear whether this is a compiler bug, or a consequence of 
     %     some subtle error elsewhere in the code.
+    %   - Without access to the ONETEP codebase, it is difficult to really
+    %     investigate this deeper.
   \end{description}
   {\footnotesize
   \begin{itemize}
@@ -20,8 +23,29 @@
     \item Compiling with OpenMP flags causes compilers to silently apply flags which change how variables are allocated:
     \begin{description}
       \item[GFortran] \texttt{-fopenmp} implies \texttt{-frecursive}, which forces all local arrays to be allocated on the stack.
+      % See https://gcc.gnu.org/onlinedocs/gfortran/OpenMP.html
       \item[Intel Fortran] \texttt{-qopenmp} implies \texttt{-automatic}, which causes all local, non-SAVEd variables to be allocated on the run-time stack.
+      % See https://software.intel.com/en-us/download/intel-fortran-compiler-170-developer-guide-and-reference (p.315)
+      %
+      % - I originally thought that this was the cause of the issue, i.e.
+      %   that -qopenmp causing non-SAVEd variables to be allocated to the 
+      %   run-time stack explained why the implicitly SAVEd local variable was
+      %   losing its value.
+      % - But, the fact that the issue does not appear for GFortran and a MWE
+      %   cannot be prepared simply by combining an implicit SAVE attribute with
+      %   OpenMP suggests something more subtle.
+      % - This should not affect standards-compliant, properly written code, 
+      %   but may cause issues where you code was accidentally relying on 
+      %   non-SAVEd variables being statically allocated.
+      %   --> A useful piece of information for debugging code where the 
+      %       behaviour changes unexpectedly with/without OpenMP.
     \end{description}
+    \item Possible causes:
+    \begin{itemize} 
+      \item Compiler bug/non-conforming compiler
+      \item Subtle memory corruption issue in code
+      \item Something completely different...?
+    \end{itemize}
   \end{itemize}
   }
 
