@@ -4,8 +4,9 @@
 
 \begin{document}
 \begin{frame}
-  \frametitle{Compiling Fortran with OpenMP:\\ Unexpected changes to storage of local variables}
+  \frametitle{Bug overview}
     \begin{description}
+      \item[Title] Unexpected changes to storage of local variables when compiling Fortran with OpenMP
       \item[Language] Fortran 2003/2008
       \item[Code] ONETEP (\url{https://www.onetep.org})
       \item[Submission] Incomplete minimal working example (MWE)
@@ -13,14 +14,42 @@
     { \footnotesize
     \begin{itemize}
       \item One-time warning is output multiple times when compiled with OpenMP
-      % The warning is to tell users 
+      % - The warning is in a routine which evaluates boundary conditions on the
+      %   edge of a simulation cell to be passed to a multigrid solver.
+      % - If non-zero charge density is too close to the box edges, a warning is 
+      %   written to stdout to inform user that their charge density may be 
+      %   subject to Fourier ringing near the face of the simulation cell, and 
+      %   suggests acions to take.
       \item Warning should be suppressed after 1\textsuperscript{st} time by setting a static variable
-      \item Message \emph{is} suppressed when compiled without OpenMP
+      % - The warning should only be output once, during the first execution of the
+      %   routine for building boundary conditions, further warning messages are
+      %   unnecessary and pollute the program output.
+      \item Warning \emph{is} suppressed when compiled without OpenMP
+      % - As expected.
       \item Static variable uses implicit SAVE attribute via explicit initialization
-      % Implicit SAVE attribute via explicit initialization is part of the Fortran standard
+      % - i.e. there is a logical variable which indicates that a warning has been
+      %   issued -- this is initialized .false., but set to .true. on first output
+      %   of the message.
+      % - The variable is static between calls to the boundary condition routine
+      %   because it has an implicit SAVE attribute
+      %   --> It is made static because it has been explicitly initialized during
+      %       type declaration (a common practice in Fortran).
+      % - Implicit SAVE attribute via explicit initialization is part of the 
+      %   Fortran standard (as far as I know...), so we expect it to be respected.
+      % - If we compile with ifort with -qopenmp flag, then this variable 
+      %   appears to consistently loose its value.
       \item Only occurs with Intel Fortran, not GFortran
+      % - Regardless of whether compiled with -fopenmp flag or not, the static
+      %   variable maintains its value between calls to the boundary condition
+      %   evaluation routine.
       \item Adding explicit SAVE attribute solves the issue with OpenMP, \emph{but why?}
+      % - This is unexpected -- is ifort not respecting our implicit SAVE 
+      %   attribute?
       \item A MWE has so far proven elusive...
+      % - Things turn out to be more complicated than "turning on OpenMP support
+      %   in ifort causes implicitly SAVEd variables to not be statically 
+      %   allocated".
+      % - The issue seems to depend on other factors.
     \end{itemize}
     }
 \end{frame}

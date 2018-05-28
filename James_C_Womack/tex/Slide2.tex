@@ -4,6 +4,26 @@
 
 \begin{document}
 \begin{frame}
-\frametitle{Bug hunt}
+  \frametitle{Bug solution}
+  \begin{description}
+    \item[Status] Resolved, but unsure why! \\
+                  Is this a compiler bug, or a subtle bug in the code?
+    
+    % - I think the difficulty in preparing a MWE is an interesting topic to 
+    %   discuss.
+    %   - It is unclear whether this is a compiler bug, or a consequence of 
+    %     some subtle error elsewhere in the code.
+  \end{description}
+  {\footnotesize
+  \begin{itemize}
+    \item While investigating this bug, I discovered some useful information about GFortran and Intel Fortran...
+    \item Compiling with OpenMP flags causes compilers to silently apply flags which change how variables are allocated:
+    \begin{description}
+      \item[GFortran] \texttt{-fopenmp} implies \texttt{-frecursive}, which forces all local arrays to be allocated on the stack.
+      \item[Intel Fortran] \texttt{-qopenmp} implies \texttt{-automatic}, which causes all local, non-SAVEd variables to be allocated on the run-time stack.
+    \end{description}
+  \end{itemize}
+  }
+
 \end{frame}
 \end{document}
