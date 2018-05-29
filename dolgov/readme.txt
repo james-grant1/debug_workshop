@@ -1,3 +1,3 @@
 Sergey Dolgov
-Bug/feature in Fortran array slicing
+Bug/feature in Fortran90 array slicing
 
