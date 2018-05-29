@@ -16,14 +16,29 @@ It turns out that the bug is actually in the unit test \verb+test_banded.f90+:
 \end{verbatim}
 
 \begin{tikzpicture}[overlay]
- \node at (14.5,2) {$\underbrace{\phantom{M1(2:4,:),4}}$};
+ \node at (14.6,1.6) {$\underbrace{\phantom{M1(2:4,:),4}}$};
 \end{tikzpicture}
 
-\vspace*{-3ex}
+\vspace*{-3.5ex}
 
 \begin{itemize}
  \item \verb+M1+ is a $4 \times n$ matrix, so the leading dimensions seems to be $4$.
- \item
+ \vspace*{-2ex}
+ \item However, \verb+M1(2:4,:)+ copies the entries into a temp. $3 \times n$ storage. \\
+ \hspace*{1cm} \textbf{$\Rightarrow$ Fix:} replace $4$ by $3$ or \verb+M1(2:4,:)+ by \verb+M1(2,1)+.
+ \vspace*{-2.5ex}
+ \item \textbf{Detection and resolution:}
+  \begin{itemize}
+  \vspace*{-2ex}
+   \item Test multiplication first.
+   \vspace*{-2ex}
+   \item Print the matrices in a separate subroutine.
+   \vspace*{-2ex}
+   \item Read your language/library specs before coding.
+  \end{itemize}
+ \vspace*{0.5ex}
+ \item There is also a ``latent'' bug in \verb+banded_solve.f90+: \\
+ right hand side \verb+W+ is \verb+intent(in)+, but the \verb+dgbsv+ solver overwrites it.
 \end{itemize}
 
 \end{document}
