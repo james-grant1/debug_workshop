@@ -1,0 +1,24 @@
+
+\documentclass{beamer}
+\usepackage{amsmath}
+\DeclareMathOperator{\erf}{erf}
+\DeclareMathOperator{\erfc}{erfc}
+
+
+\begin{document}
+
+\begin{frame}
+\frametitle{Solving an equation involving error functions in a Fortran program:
+The solution}
+\begin{itemize}
+\item It's a precision issue...
+\item ...but double precision doesn't solve it!
+\item The calculated root of $1-\erf(x) = c$ is in error
+\item The calculation of $\erf(x)$ is not adequate for large $x$
+\item Our solution:- expand erf(x) as an asymptotic series for $x >> 1$,
+\[ \erf(x) = 1 - \frac{\exp(-x^2)}{\sqrt{\pi}x} \left( 1-\frac{1}{2x^2} - \cdots
+\right) \]
+\item Similar issues occur for $exp(x)$ when $x << 1$, etc.
+\end{itemize}
+\end{frame}
+\end{document}
