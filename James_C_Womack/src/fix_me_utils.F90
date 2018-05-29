@@ -66,11 +66,12 @@ module fix_me_utils
       integer       :: irot
       integer       :: num_threads
       integer, save :: n_calls = 0
+!     logical, save :: test_var = .false. ! explicit SAVE attribute
       logical       :: test_var = .false. ! implicit SAVE attribute
 
       write(OUTPUT_UNIT,'(a)')    "[ Entering apply_Rmat ]"
 
-      write(OUTPUT_UNIT,'(a,l1)') "Value of test_var: ", test_var
+      write(OUTPUT_UNIT,'(a,l1)') "[Value on entry] test_var == ", test_var
 
       num_threads = 1
 !$    num_threads = omp_get_max_threads()
@@ -89,6 +90,8 @@ module fix_me_utils
       n_calls = n_calls + 1
 
       write(OUTPUT_UNIT,'(a,i0,a)') "apply_Rmat called ", n_calls, " times."
+
+      write(OUTPUT_UNIT,'(a,l1)') "[Value on exit] test_var == ", test_var
 
       write(OUTPUT_UNIT,'(a)')    "[ Leaving apply_Rmat ]"
 
