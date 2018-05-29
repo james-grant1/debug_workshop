@@ -24,10 +24,13 @@ ${EXE_OBJ} : ${FIX_ME_OBJ}
 %.o : %.F90
 	${FC} ${FFLAGS} -c $<
 
-clean : clean_obj clean_mod
+clean : clean_obj clean_mod clean_exe
 
 clean_obj :
 	rm -vf ${FIX_ME_OBJ} ${EXE_OBJ}
 
 clean_mod :
 	rm -vf ${FIX_ME_MOD} ${EXE_OBJ}
+
+clean_exe : 
+	rm -vf ${EXE}
