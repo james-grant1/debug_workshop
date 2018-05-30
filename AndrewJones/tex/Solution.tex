@@ -1,0 +1,23 @@
+\documentclass{beamer}
+\usecolortheme{seahorse}
+
+\begin{document}
+  \begin{frame}
+    \frametitle{Solution: Revealing a memory management bug in NAME}
+    \framesubtitle{Andrew Jones, Met Office}
+    \begin{itemize}
+       \item  {\bf Bug:}            Code attempts to 'Allocate' some allocatable
+                                    arrays that are already allocated
+       \item  {\bf Identified by:}  A helpful run-time error message and traceback!
+       \item  {\bf Our Solution:}   Guard 'Allocate' statements by an if-test
+                                    for existing allocation \ldots or deallocate
+                                    (this was already done for other arrays
+                                    elsewhere in the code)
+       \item  {\bf Legacy issue:}   Bug had remained hidden in earlier code
+                                    for many years. This would have resulted
+                                    in a slight memory leak but it was never spotted
+                                    as i) overall memory effect was small, and
+                                    ii) multiple-case option was rarely used in NAME.
+    \end{itemize}
+  \end{frame}
+\end{document}
