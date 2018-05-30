@@ -1,5 +1,5 @@
 My Name:      Jack Betteridge
 Bug Name:     Recursive MPI calls and pytest
 Solution:     This bug was not resolved!
-              We just didn't run any parallel tests
+              We just didn't run any parallel tests.
               O_O
