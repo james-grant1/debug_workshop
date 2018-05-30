@@ -1,0 +1,24 @@
+\documentclass{beamer}
+
+\mode<presentation> {
+
+\begin{document}
+
+\begin{frame}
+\frametitle{GMRES solver fails to converge}
+
+\begin{itemize}
+\item GMRES uses an array of the abstract vector type,
+      - allocated as type of the passed in vector
+\item Using combination of write statements and Debugger
+\item copying into an element of the array results in *all* the 
+      elements of the array having that vector
+\item Compiler bug (unconfirmed) for Cray and PGI! 
+
+
+\end{itemize}
+
+\end{frame}
+
+}
+\end{document} 
