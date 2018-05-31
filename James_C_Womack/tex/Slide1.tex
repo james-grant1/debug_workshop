@@ -2,6 +2,16 @@
 \mode<presentation>
 \beamertemplatenavigationsymbolsempty 
 
+\title{Debugging Numerical Software}
+\author{James C. Womack}
+
+\setbeamertemplate{footline}[text line]{%
+  \strut 
+  \insertauthor 
+  \hfill
+  \inserttitle
+}
+
 \begin{document}
 \begin{frame}
   \frametitle{Bug overview}
@@ -9,7 +19,8 @@
       \item[Title] Unexpected changes to storage of local variables when compiling Fortran with OpenMP
       \item[Language] Fortran 2003/2008
       \item[Code] ONETEP (\url{http://www.onetep.org})
-      \item[Submission] Incomplete minimal working example (MWE)
+      \item[Submission] Attempted minimal working example (MWE)
+                        with example ONETEP output files
     \end{description}
     { \footnotesize
     \begin{itemize}
@@ -38,7 +49,7 @@
       %   Fortran standard (as far as I know...), so we expect it to be respected.
       % - If we compile with ifort with -qopenmp flag, then this variable 
       %   appears to consistently loose its value.
-      \item Only occurs with Intel Fortran, not GFortran
+      \item Occurs with Intel Fortran but not GFortran
       % - Regardless of whether compiled with -fopenmp flag or not, the static
       %   variable maintains its value between calls to the boundary condition
       %   evaluation routine.
