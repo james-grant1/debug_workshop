@@ -1,0 +1,57 @@
+
+
+%%==========================================================================================
+%% Solution
+
+\begin{frame}[fragile]
+\frametitle{Solution (slide 1/2)}
+
+\begin{lstlisting}
+   ! simul.f90/doSimulation():
+    line 225: statevarsTod = statevarsTom
+   ! statevars.f90 (lines 7-52):
+    type :: stateVars1
+       procedure :: copyThatInThis => copyThatInThis_stateVars1
+       generic   :: assignment (=) => copyThatInThis
+    end type stateVars1
+    type, extends(stateVars1) :: stateVars2
+       procedure :: copyThatInThis => copyThatInThis_stateVars2
+    end type stateVars2
+\end{lstlisting}
+
+\begin{itemize}
+   \item{\verb|'copyThatInThis_stateVars1'| is not overriden \\ (hence, \verb|'statevarsTom'| components not updated properly)}
+   \item{Seems to be a compiler bug; ifort 16 gets it right, gfortran 7.1.0 doesn't}
+   \item{Hot fix: call \verb|'copyThatInThis'| directly (or use \verb|'select type'| and call \verb|'copyThatInThis_statevars2'|)}
+\end{itemize}
+
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Solution (slide 2/2)}
+
+\begin{itemize}
+   \item{Surprisingly, was not too painful because
+      \begin{enumerate}
+         \item{did not know the code was correct \smiley{}}
+         \item{lot of bugs of that kind}
+         \item{number of hot fixes available}
+         \item{was lucky, generally hard to detect}
+      \end{enumerate}
+      }
+   \item{Bug might have stayed for about two years before resolved, but was not affecting the code (hot fixed)
+   \item{Generally, compiler bugs very painful}
+      \begin{enumerate}
+          \item{Another compiler bug took me three days and required major re-design}
+          \item{Using many different compilers can help a lot (includes different versions of the same compiler)}
+      \end{enumerate}
+	   }
+\end{itemize}
+
+
+
+\end{frame}
+
+
