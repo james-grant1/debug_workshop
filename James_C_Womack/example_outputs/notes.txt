@@ -1,0 +1,40 @@
+James C. Womack
+
+Example output files for bug: Unexpected behaviour of Fortran OpenMP code
+
+These files are example outputs which demonstrate the bug in the original code,
+ONETEP (http://www.onetep.org).
+
+The code was slightly modified to print out the value of the variable 
+"ringing_warning_issued" on entry and exit to the routine which evaluates
+boundary conditions for the multigrid solver. This demonstrates the change
+in behaviour upon
+- change of compiler
+- compilation with/without OpenMP
+- use of explicit SAVE attribute
+
+All outputs were generated with a single MPI process and with 1 OpenMP thread
+to eliminate any possibility of parallelism affecting the bug. 
+
+Examples:
+
+pyruvate_solvation_auto_1OMP_1MPI_ifort17.out
+- Bug is evident (value of ringing_warning_issued is not preserved across
+  subroutine calls)
+- Compiled with Intel Fortran 17.0.2, with -qopenmp
+
+pyruvate_solvation_auto_NOOMP_1MPI_ifort17.out
+- Bug is not evident (value of ringing_warning_issued is preserved across
+  subroutine calls)
+- Compiled with Intel Fortran 17.0.2, without -qopenmp
+
+pyruvate_solvation_auto_1OMP_1MPI_explicit_save_ifort17.out
+- Bug is not evident (value of ringing_warning_issued is preserved across
+  subroutine calls)
+- Compiled with Intel Fortran 17.0.2, with -qopenmp
+- ringing_warning_issued has an explicit SAVE attribute
+
+pyruvate_solvation_auto_1OMP_1MPI_gfortran492.out
+- Bug is not evident (value of ringing_warning_issued is preserved across
+  subroutine calls)
+- Compiled with GFortran 4.9.2, with -fopenmp
