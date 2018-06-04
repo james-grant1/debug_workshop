@@ -1,0 +1,24 @@
+
+\documentclass{beamer}
+\usepackage{amsmath}
+\DeclareMathOperator{\erf}{erf}
+\DeclareMathOperator{\erfc}{erfc}
+
+
+\begin{document}
+
+\begin{frame}
+\frametitle{Solving an equation involving error functions in a Fortran program}
+\begin{itemize}
+\item Bug appeared in a dispersion model and gave unfeasible values which caused
+the code to get stuck in a loop
+\item This is a specially constructed bug which illustrates simply the issue and
+the solution
+\item Finds the root of the equation $1-\erf(x) = c$ (where $c$ is a constant)
+by interval bisection
+\item Now $1-\erf(x) = \erfc(x)$
+\item Also finds the root of the equation $\erfc(x) = c$ by interval bisection
+\item Why are the results different and which is correct?
+\end{itemize}
+\end{frame}
+\end{document}

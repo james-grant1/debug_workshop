@@ -1,0 +1,58 @@
+\documentclass{slides}
+\usepackage[landscape]{geometry}
+\usepackage[cm]{fullpage}
+\usepackage{amsmath}
+
+\begin{document}
+
+\begin{center}
+{\large\bf Bug/feature in Fortran90 array slicing}
+\end{center}
+
+
+This is a short version of the solver for the neutron diffusion equations
+\begin{equation}
+\begin{bmatrix}
+ M_1 & 0 \\
+ -S  & M_2
+\end{bmatrix}
+\begin{bmatrix}
+ u_1 \\
+ u_2
+\end{bmatrix} =
+\begin{bmatrix}
+ w_1 \\
+ w_2
+\end{bmatrix}.
+\label{eq}
+\end{equation}
+It creates matrices in LAPACK banded form, solves \eqref{eq} and tests it.
+
+
+\begin{itemize}
+ \item \textbf{main file:} \verb+neutron.f90+ in the \verb+src/+ directory.
+ \vspace*{-3ex}
+ \item \textbf{compilation:} the code needs LAPACK, so there are 2 ways:
+ \begin{itemize}
+ \vspace*{-2ex}
+  \item Run \verb*+cmake .+ to find LAPACK automatically with CMake.
+ \vspace*{-2ex}
+  \item Alternatively, edit \verb+Makefile+ and set \verb+LIBS+ manually.
+ \vspace*{-2ex}
+  \item Run \verb+make+
+ \end{itemize}
+ \vspace*{-3ex}
+ \item \textbf{bug:} running \verb+./neutron+, we observe
+\end{itemize}
+\vspace*{-3ex}
+\begin{verbatim}
+ banded_solve error =    5.8038653831179055
+\end{verbatim}
+\vspace*{-2ex}
+(or a similar large error)
+
+\vspace*{-2ex}
+\begin{itemize}
+ \item \textbf{hint:} the matrices are correct, the bug is somewhere in the solver.
+\end{itemize}
+\end{document}

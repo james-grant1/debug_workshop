@@ -1,0 +1,21 @@
+\documentclass{beamer}
+\usecolortheme{seahorse}
+
+\begin{document}
+  \begin{frame}
+    \frametitle{My Bug: Revealing a memory management bug in NAME}
+    \framesubtitle{Andrew Jones, Met Office}
+    \begin{itemize}
+       \item  {\bf Overview:} Idealised code to illustrate a hidden non-critical bug
+                              recently discovered in our NAME dispersion model
+       \item  {\bf Model:}    Numerical Atmospheric-dispersion Modelling Environment
+                              (UK Met Office)
+       \item  {\bf Language:} Fortran (90 + some 2003 features)
+       \item  {\bf Issue:}    A seemingly straightforward update to an attribute of some
+                              derived type components from 'pointer' to 'allocatable'
+                              caused a run-time failure for a certain type of NAME
+                              application. Why? ... and were there any underlying
+                              issues with the previous code?
+    \end{itemize}
+  \end{frame}
+\end{document}
