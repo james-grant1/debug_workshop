@@ -11,7 +11,9 @@
 \item Monte Carlo code written in C to simulate on-lattice disorder in the cation sub-lattice of Cu$_2$ZnSnS$_4$
 \item `Segmentation fault: 11' during runtime
 \item Note that equilibration steps has been reduced to an unphysical number in current version of code just to reach the bug sooner! 
-
+\item Compilation instructions for Balena: Code requires libconfig, `module load intel', `make cx1-icc' (Makefile instructions for the HPC facility at Imperial College London)
+\item *Should* work on local linux machines (and maybe on Macs after getting libconfig): `sudo apt-get install libconfig-dev' and then just use `make' (default option in the Makefile)
+\item See git repo for more details: https://github.com/WMD-group/Eris
 \end{itemize}
 
 \end{frame}
