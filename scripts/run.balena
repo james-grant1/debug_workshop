@@ -1,0 +1,32 @@
+#!/bin/bash
+
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=16
+
+#SBATCH --mem=60000
+
+#SBATCH --time=6:00:00
+
+#SBATCH --job-name=my_job
+
+#SBATCH --account=prj-trn13
+#SBATCH --reservation=dbg-workshop
+
+#SBATCH --mail-user=rjg20@bath.ac.uk
+
+#SBATCH --output=StdOut.o.%j
+#SBATCH --error=StdErr.e.%j
+
+
+module purge
+module load slurm/16.05.3
+
+# load any necessary modules
+
+export OMP_NUM_THREADS=1
+
+#~/vasppush.sh
+mpirun -np 16 .my_job.sh
+
+#sinteractive # to run and interactive job on an itd node (shared resource)
+
