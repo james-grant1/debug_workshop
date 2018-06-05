@@ -1,0 +1,11 @@
+James C. Womack
+
+Example code for bug: Unexpected behaviour of Fortran OpenMP code
+
+example_routine.F90 contains a stripped-down reproduction of the original 
+routine in which the bug is manifested in ONETEP. Most of the functionality 
+and dependencies on other modules in ONETEP have been removed. Procedure 
+and variable names differ to the original code.
+
+This is provided to provide context for the bug and demonstrate the 
+general structure of the routine in which it is manifested.
