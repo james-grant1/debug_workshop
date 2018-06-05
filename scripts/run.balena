@@ -28,5 +28,5 @@ export OMP_NUM_THREADS=1
 #~/vasppush.sh
 mpirun -np 16 .my_job.sh
 
-#sinteractive # to run and interactive job on an itd node (shared resource)
+#sinteractive --account=prj-trn13 --res=dbg-workshop # to run and interactive job on an itd node (shared resource)
 
