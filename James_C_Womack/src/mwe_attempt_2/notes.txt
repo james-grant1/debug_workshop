@@ -1,0 +1,19 @@
+James C. Womack and Ryan Pepper
+
+Example code for bug: Unexpected behaviour of Fortran OpenMP code
+
+This is a new minimal working example, built starting from a stripped down
+version of the original routine in which the bug appeared in ONETEP.
+This appears to reproduce the original problem for the Intel Compiler 17.0.2.
+
+We identified that the bug also appears to be related to optimization in the
+Intel Fortran compiler. With the -g flag, the issue disappears, but that implies
+-O0. Adding -O1 brings the issue back. The next step would be to interrogate the
+optimization options to see if we can find if a specific optimization is causing
+this issue.
+
+The issue does not appear to occur for Intel Fortran 18.0.0, regardless of
+optimization level, or compilation with/without OpenMP. We have also not
+seen the issue in GFortran or PGI Fortran, so it seems likely that this
+was a compiler bug associated with OpenMP and optimization which has been
+resolved since Intel Fortran version 17.0.2.
