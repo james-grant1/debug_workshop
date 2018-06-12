@@ -10,32 +10,6 @@ module mwe
 
   contains
 
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  ! Example bug for Debugging Numerical Software workshop, Bath, 4-5 June 2018
-  ! James C. Womack, 30/05/18
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  ! This is a stripped-down reproduction of the original routine in which the bug
-  ! is manifested in ONETEP. Most of the functionality and dependencies on other 
-  ! modules in ONETEP have been removed. Procedure and variable names differ to
-  ! the original code.
-  !
-  ! This is provided to demonstrate the  general structure of the routine in which 
-  ! the bug occurs, to accompany the attempted minimal working example.
-  !
-  ! The routine is called multiple times during a typical ONETEP calculation,
-  ! but we only want a warning output once. We suppress this warning using an
-  ! implicitly SAVEd logical variable.
-  !
-  ! When compiled with GFortran, the correct behaviour is observed regardless 
-  ! of whether the program is compiled with/without OpenMP (-fopenmp flag).
-  !
-  ! When compiled with Intel Fortran (17.0), the correct behaviour is only 
-  ! observed when compiled without OpenMP (-qopenmp). When compiling with OpenMP
-  ! the value of the SAVEd logical variable appears to be lost
-  !
-  ! This stripped-down reproduction should compile to an object file, but will 
-  ! require additional work to make executable.
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   
   subroutine prepare_boundary_conditions(boundary_conditions, charge_density, n1, n2, n3, &
              grid_vec)
@@ -44,7 +18,6 @@ module mwe
 !$  use omp_lib, only: omp_get_max_threads
   
     implicit none
-  
   
     ! Arguments
     real(kind=DP), intent(out)  :: boundary_conditions(:,:,:)

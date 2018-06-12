@@ -1,10 +1,27 @@
 program main
 
+  ! Example bug for Debugging Numerical Software workshop, Bath, 4-5 June 2018
+  ! Minimal working example (MWE) by James C. Womack and Ryan Pepper, 05/06/18
+  !
+  ! This program calls a modified version of the stripped-down reproduction 
+  ! of the original routine provided with the original bug submission. Most of 
+  ! the functionality and dependencies on other modules in ONETEP have been 
+  ! removed. Procedure and variable names differ the original code and 
+  ! fake data has been used to attempt to reproduce the original context of the
+  ! bug.
+  !
+  ! In our investigations during the bug hunt session on 05/06/18, this new
+  ! minimal working example was able to reproduce the bug, when compiled with
+  ! Intel Fortran 17.0.2 and the -fopenmp flag. The bug did not seem to manifest
+  ! with Intel Fortran 18.0.0, or with GFortran and PGI Fortran compilers.
+  ! 
+  ! It looks very likely that this was a compiler bug in Intel Fortran 17.0.2
+  ! which has been resolved in more recent versions of the compiler.
+
   use, intrinsic :: iso_fortran_env
   use mwe, only : DP, prepare_boundary_conditions
 
   implicit none
-
   
   real(kind=DP), allocatable :: boundary_conditions(:,:,:) 
   real(kind=DP), allocatable :: charge_density(:,:,:)
