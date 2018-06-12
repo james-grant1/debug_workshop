@@ -2,9 +2,9 @@ James C. Womack and Ryan Pepper
 
 Example code for bug: Unexpected behaviour of Fortran OpenMP code
 
-This is a new minimal working example, build starting from a stripped down
-version of the original routine in which the code. This appears to reproduce 
-the original problem for the Intel Compiler 17.0.2.
+This is a new minimal working example, built starting from a stripped down
+version of the original routine in which the bug appeared in ONETEP.
+This appears to reproduce the original problem for the Intel Compiler 17.0.2.
 
 We identified that the bug also appears to be related to optimization in the
 Intel Fortran compiler. With the -g flag, the issue disappears, but that implies
