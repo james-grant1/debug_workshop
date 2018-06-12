@@ -1,5 +1,5 @@
 # Example bug for Debugging Numerical Software workshop, Bath, 4-5 June 2018
-# James C. Womack, 25/05/18
+# James C. Womack and Ryan Pepper, 05/06/18
 #
 # Change FC to use a different Fortran compiler, e.g.
 # 	make FC=ifort
@@ -32,5 +32,5 @@ clean_obj :
 clean_mod :
 	rm -vf ${FIX_ME_MOD} ${EXE_OBJ}
 
-clean_exe : 
+clean_exe :
 	rm -vf ${EXE}
